@@ -17,5 +17,7 @@ BEGIN
             ON corrections.project_id = project_id
         WHERE corrections.user_id = user_id;
     IF total_weight = 0 THEN
-        UPDATE users SET user.average_score = 0
+        UPDATE users SET users.average_score = 0
         WHERE user_id = user_id;
+    ELSE
+        UPDATE users
