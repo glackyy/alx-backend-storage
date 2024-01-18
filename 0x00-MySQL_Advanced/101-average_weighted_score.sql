@@ -7,7 +7,7 @@ BEGIN
   UPDATE users AS us, 
     (SELECT us.id, SUM(score * weight) / SUM(weight) AS w_avg 
     FROM users AS us
-    JOIN corrections as c ON us.id=c.user_id 
+    JOIN corrections AS c ON us.id=c.user_id 
     JOIN projects AS pr ON c.project_id=pr.id 
     GROUP BY us.id)
   AS WA
