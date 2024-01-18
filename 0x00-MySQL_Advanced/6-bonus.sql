@@ -3,7 +3,7 @@
 DELIMITER $$ ;
 CREATE PROCEDURE AddBonus(
     IN user_id INTEGER
-    in project_name VARCHAR(250),
+    IN project_name VARCHAR(250),
     IN score INTEGER
 )
 BEGIN
