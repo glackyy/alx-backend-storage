@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
 // showing all databases
 show dbs
