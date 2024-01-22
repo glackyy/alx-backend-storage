@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
 // inserting into database
 db.school.insert({name: "Holberton school"})
