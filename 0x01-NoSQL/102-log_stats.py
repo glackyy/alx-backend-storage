@@ -34,5 +34,10 @@ def nginx_stats_check():
             "count": 1
         }}
     ])
-    
+    for t_ip in t_IPs:
+        c = t_ip.get("count")
+        ip_add = t_ip.get("ip")
+        print("\t{}: {}".format(ip_add, c))
+
+
 if __name__ == "__main__":
