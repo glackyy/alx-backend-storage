@@ -1,1 +1,3 @@
 #!/usr/bin/env bash
+// finding all 
+db.school.find()
