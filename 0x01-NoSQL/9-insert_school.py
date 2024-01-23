@@ -3,7 +3,7 @@
 import pymongo
 
 
-def insert_scool(mongo_collection):
+def insert_school(mongo_collection):
     """inserting a doc into a collection"""
     dt = mongo_collection.insert_one()
     return dt.inserted_id
