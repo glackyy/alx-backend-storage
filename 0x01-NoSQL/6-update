@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 // updating document with name=Holberton school and adding new address
 db.school.update(
         {name:"Holberton school"},
