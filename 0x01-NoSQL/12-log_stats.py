@@ -20,7 +20,7 @@ def log_stats(mongo_collection, option=None):
     for met in METHODS:
         log_stats(nginx_collection, met)
     stat_check = mongo_collection.count_documents({"path": "/status"})
-    print (f"{stat_check} status check")
+    print(f"{stat_check} status check")
 
 
 if __name__ == "__main__":
