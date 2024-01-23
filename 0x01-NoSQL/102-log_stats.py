@@ -15,4 +15,21 @@ def nginx_stats_check():
         print("\tmethod {}: {}".format(met, meth_count))
     st = col.count_documents({"method": "GET", "path": "/status"})
     print("{} status check".format(st))
+    print("IPs:")
+    t_IPs = col.aggregate([
+        {"$group":
+         {
+             "_id": "$ip",
+             "count": {"$sum": 1}
+         }
+         },
+        {"$sort": {"count": -1}},
+        {"$limit": 10},
+        {"$project": {
+            "_id": 0,
+            "ip": "$_id",
+            "count": 1
+        }}
+    ])
+    
 if __name__ == "__main__":
