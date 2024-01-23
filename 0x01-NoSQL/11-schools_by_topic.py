@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Listing school topics"""
-
+import pymongo
 
 def school_by_topic(mongo_collection, topic):
     """Returning list of school having a specific topic"""
