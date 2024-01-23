@@ -22,4 +22,5 @@ def log_stats(mongo_collection, option=None):
     stat_check = mongo_collection.count_documents({"path": "/status"})
     print (f"{stat_check} status check")
 
+
 if __name__ == "__main__":
