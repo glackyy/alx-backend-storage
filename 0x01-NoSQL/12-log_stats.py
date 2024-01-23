@@ -14,6 +14,12 @@ def log_stats(mongo_collection, option=None):
             {"method": {"$regex": option}})
         print(f"\tmethod {option}: {val}")
         return
-
+    res = mongo_collection.count_documents(items)
+    print(f"{res} logs")
+    print("Methods:")
+    for met in METHODS:
+        log_stats(nginx_collection, met)
+    stat_check = mongo_collection.count_documents({"path": "/status"})
+    print (f"{stat_check} status check")
 
 if __name__ == "__main__":
