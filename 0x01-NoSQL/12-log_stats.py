@@ -12,7 +12,7 @@ def log_stats(mongo_collection, option=None):
     if option:
         val = mongo_collection.count_documents(
             {"method": {"$regex": option}})
-        prin(f"\tmethod {option}: {val}")
+        print(f"\tmethod {option}: {val}")
         return
 
 
