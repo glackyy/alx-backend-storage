@@ -2,6 +2,7 @@
 """Listing all documents"""
 import pymongo
 
+
 def list_all(mongo_collection):
     """Function listing all doc in a collection"""
     if not mongo_collection:
