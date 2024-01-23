@@ -3,7 +3,7 @@
 import pymongo
 
 
-def update_topic(mongo_collection, name, topics):
+def update_topics(mongo_collection, name, topics):
     """updating doc with a value as a attr"""
     return mongo_collection.update_many({
         "name": name
