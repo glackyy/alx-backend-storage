@@ -10,6 +10,6 @@ def update_topics(mongo_collection, name, topics):
     },
     {
         "$set": {
-            "topics": topics
+                "topics": topics
         }
     })
