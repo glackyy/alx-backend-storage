@@ -6,6 +6,11 @@ from typing import Union, Callable, Optional
 from functools import wraps
 
 
+def count_calls(method: Callable) -> Callable:
+    """Counting how many times methods of the class Cache are called"""
+    k = method.__qualname__
+
+
 class Cache:
     """Declaring a Cache class"""
     def __init__(self):
@@ -40,6 +45,3 @@ class Cache:
         except Exception:
             val = 0
         return val
-def count_calls(method: Callable) -> Callable:
-    """Counting how many times methods of the class Cache are called"""
-    k = method.__qualname__
