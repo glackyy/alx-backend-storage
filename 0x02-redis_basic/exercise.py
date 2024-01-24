@@ -69,7 +69,7 @@ class Cache:
         self.__redis.set(rk, data)
         return rk
 
-    def get(self, key: str, 
+    def get(self, key: str,
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """Converting the data back to the desired format"""
         val = self.__redis.get(key)
