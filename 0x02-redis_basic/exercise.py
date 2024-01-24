@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """Function declares a redis class and methods"""
 import redis
 from uuid import uuid4
