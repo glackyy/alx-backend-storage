@@ -3,25 +3,22 @@
 import requests
 import redis
 from functools import wraps
-
+from typing import Callable
 
 store = redis.Redis()
 
 
-def count_url_access(method):
+def count_url_access(method: Callable) -> Callable:
     """Decorator counting times a url is accessed"""
     @wraps(method)
     def wrapper(url):
-        c_key = "cached:" + url
-        c_data = store.get(c_key)
-        if c_data:
-            return c_data.decode("utf-8")
+        store.incr(f"count:{url}")
+        c_html = store.get(f"cached:{url}")
+        if c_html:
+            return c_html.decode("utf-8")
 
-        ct_key = "count:" + url
         html = method(url)
-        store.incr(ct_key)
-        store.set(c_key, html)
-        store.expire(c_key, 10)
+        store.setex(f"cached:{url}", 10, html)
         return html
     return wrapper
 
