@@ -62,7 +62,9 @@ class Cache:
         """init to store an instance and flush"""
         self.__redis = redis.Redis(host='localhost', port=6379, db=0)
         self.__redis.flushdb()
-
+    
+    @call_history
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """taking a data arg and returning a string"""
         rk = str(uuid4())
