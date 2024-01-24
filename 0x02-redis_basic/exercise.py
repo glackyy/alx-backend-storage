@@ -13,7 +13,7 @@ def count_calls(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """Wrapping the decorated func and returning the wrapper"""
-        self.__redis.incr(k)
+        self._redis.incr(k)
         return method(self, *args, **kwargs)
     return wrapper
 
@@ -25,9 +25,9 @@ def call_history(method: Callable) -> Callable:
         """wrapping the decorated function and returning the wrapper"""
         key = method.__qualname__
         inp = str(args)
-        self.__redis.rpush(key + ":inputs", inp)
+        self._redis.rpush(key + ":inputs", inp)
         outp = str(method(self, *args, **kwargs))
-        self.__redis.rpush(key + ":outputs", outp)
+        self._redis.rpush(key + ":outputs", outp)
         return outp
     return wrapper
 
@@ -60,33 +60,33 @@ class Cache:
     """Declaring a Cache class"""
     def __init__(self):
         """init to store an instance and flush"""
-        self.__redis = redis.Redis(host='localhost', port=6379, db=0)
-        self.__redis.flushdb()
+        self._redis = redis.Redis(host='localhost', port=6379, db=0)
+        self._redis.flushdb()
 
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """taking a data arg and returning a string"""
         redk = str(uuid4())
-        self.__redis.set(redk, data)
+        self._redis.set(redk, data)
         return redk
 
     def get(self, key: str,
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
         """Converting the data back to the desired format"""
-        val = self.__redis.get(key)
+        val = self._redis.get(key)
         if fn:
             val = fn(val)
         return val
 
     def get_str(self, key: str) -> str:
         """Parametrizing Cache get with the correct conversion func"""
-        val = self.__redis(key)
+        val = self._redis(key)
         return val.decode("utf-8")
 
     def get_int(self, key: str) -> int:
         """Parametrizing Cache get with the correct conversion func"""
-        val = self.__redis(key)
+        val = self._redis(key)
         try:
             val = int(val.decode("utf-8"))
         except Exception:
