@@ -23,3 +23,10 @@ def ct_url_access(method):
         store.expire(c_key, 10)
         return html
     return wrapper
+
+
+@ct_url_access
+def get_page(url: str) -> str:
+    """Returning html content of a url"""
+    result = requests.get(url)
+    return result.text
