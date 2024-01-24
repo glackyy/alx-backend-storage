@@ -27,6 +27,19 @@ class Cache:
             val = fn(val)
         return val
 
+    def get_str(self, key: str) -> str:
+        """Parametrizing Cache get with the correct conversion func"""
+        val = self.__redis(key)
+        return val.decode("utf-8")
+
+    def get_int(self, key: str) -> int:
+        """Parametrizing Cache get with the correct conversion func"""
+        val = self.__redis(key)
+        try:
+            val = int(val.decode("utf-8"))
+        except Exception:
+            val = 0
+        return val
 def count_calls(method: Callable) -> Callable:
     """Counting how many times methods of the class Cache are called"""
     k = method.__qualname__
