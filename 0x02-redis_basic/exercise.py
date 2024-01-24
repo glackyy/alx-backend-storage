@@ -23,11 +23,10 @@ def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """wrapping the decorated function and returning the wrapper"""
-        key = method.__qualname__
         inp = str(args)
-        self.__redis.rpush(key + ":inputs", inp)
+        self.__redis.rpush(method.__qualname__ + ":inputs", inp)
         outp = str(method(self, *args, **kwargs))
-        self.__redis.rpush(key + ":outputs", outp)
+        self.__redis.rpush(method.__qualname__ + ":outputs", outp)
         return outp
     return wrapper
 
@@ -67,9 +66,9 @@ class Cache:
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """taking a data arg and returning a string"""
-        rk = str(uuid4())
-        self.__redis.set(rk, data)
-        return rk
+        redk = str(uuid4())
+        self.__redis.set(redk, data)
+        return redk
 
     def get(self, key: str,
             fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
