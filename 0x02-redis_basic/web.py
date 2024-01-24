@@ -16,3 +16,10 @@ def ct_url_access(method):
         c_data = store.get(c_key)
         if c_data:
             return c_data.decode("utf-8")
+        ct_key = "count:" + url
+        html = method(url)
+        store.incr(ct_key)
+        store.set(c_key, html)
+        store.expire(c_key, 10)
+        return html
+    return wrapper
