@@ -20,7 +20,7 @@ def count_url_access(method: Callable) -> Callable:
         html = method(url)
         store.setex(f"cached:{url}", 10, html)
         return html
-    return wrapper
+    return wrappers
 
 
 @count_url_access
