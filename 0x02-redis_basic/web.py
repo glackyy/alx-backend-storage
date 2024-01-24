@@ -8,7 +8,7 @@ from functools import wraps
 store = redis.Redis()
 
 
-def ct_url_access(method):
+def count_url_access(method):
     """Decorator counting times a url is accessed"""
     @wraps(method)
     def wrapper(url):
@@ -25,7 +25,7 @@ def ct_url_access(method):
     return wrapper
 
 
-@ct_url_access
+@count_url_access
 def get_page(url: str) -> str:
     """Returning html content of a url"""
     result = requests.get(url)
