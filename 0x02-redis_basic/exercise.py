@@ -19,6 +19,14 @@ class Cache:
         self.__redis.set(rk, data)
         return rk
 
+    def get(self, key: str, 
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+        """Converting the data back to the desired format"""
+        val = self.__redis.get(key)
+        if fn:
+            val = fn(val)
+        return val
+
 def count_calls(method: Callable) -> Callable:
     """Counting how many times methods of the class Cache are called"""
     k = method.__qualname__
