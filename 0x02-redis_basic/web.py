@@ -13,14 +13,14 @@ def count_url_access(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url):
         store.incr(f"count:{url}")
-        c_html = store.get(f"cached:{url}")
+        c_html = store.get(f"cached:{url")
         if c_html:
             return c_html.decode("utf-8")
 
         html = method(url)
         store.setex(f"cached:{url}", 10, html)
         return html
-    return wrappers
+    return wrapper
 
 
 @count_url_access
