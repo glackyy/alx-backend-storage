@@ -12,10 +12,25 @@ def count_calls(method: Callable) -> Callable:
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """Wrapping the decorated func and return the wrapper"""
+        """Wrapping the decorated func and returning the wrapper"""
         self.__redis.incr(k)
         return method(self, *args, **kwargs)
     return wrapper
+
+
+def call_history(method: Callable) -> Callable:
+    """Storing the history of inputs and outputs for a particular func"""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """wrapping the decorated function and returning the wrapper"""
+        key = method.__qualname__
+        inp = str(args)
+        self.__redis.rpush(key + ":inputs", inp)
+        outp = str(method(self, *args, **kwargs))
+        self.__redis.rpush(key + ":outputs", outp)
+        return outp
+    return wrapper
+
 
 class Cache:
     """Declaring a Cache class"""
