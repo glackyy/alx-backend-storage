@@ -10,6 +10,12 @@ def count_calls(method: Callable) -> Callable:
     """Counting how many times methods of the class Cache are called"""
     k = method.__qualname__
 
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """Wrapping the decorated func and return the wrapper"""
+        self.__redis.incr(k)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 class Cache:
     """Declaring a Cache class"""
